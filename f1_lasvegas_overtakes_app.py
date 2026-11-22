@@ -230,7 +230,7 @@ if n == 0:
     st.warning("OpenF1 has no overtake data for this race (the endpoint is beta and can be incomplete). Try again later.")
     st.stop()
 
-st.caption(f"[v5 · list] {year} {event_name} · {n} overtakes (OpenF1) · the list starts in starting order and drivers move up as they overtake")
+{year} {event_name} · {n} overtakes (OpenF1) · the list starts in starting order and drivers move up as they overtake")
 page = build_component(res, ot).strip()
 if hasattr(st, "iframe"):          # newer Streamlit
     st.iframe(page, height=210 + 44 * len(res))
