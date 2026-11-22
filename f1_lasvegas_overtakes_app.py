@@ -101,9 +101,9 @@ TEMPLATE = """
   #fill { height:100%; width:0; background:#e10600; }
   #track { padding-top:4px; }
   #row { position:relative; }
-  .item { position:absolute; left:0; right:0; display:flex; align-items:center; gap:12px;
+  .item { position:absolute; left:0; width:calc(50% - 6px); display:flex; align-items:center; gap:12px;
           border-bottom:1px solid #2a2a35; border-left:4px solid #555; padding:0 10px 0 10px;
-          transition: top var(--t,.1s) ease-in-out, background .15s; }
+          transition: top var(--t,.1s) ease-in-out, left var(--t,.1s) ease-in-out, background .15s; }
   .item.up   { background:rgba(46,204,113,.25); z-index:5; }
   .item.down { background:rgba(231,76,60,.25); }
   .item .pos  { width:34px; font-weight:800; font-size:17px; text-align:right; }
@@ -148,11 +148,14 @@ drivers.forEach(d => {
 });
 
 function render(up, down) {
-  row.style.height = (RH * drivers.length) + 'px';
+  const per = Math.ceil(drivers.length / 2);
+  row.style.height = (RH * per) + 'px';
   order.forEach((abbr, i) => {
     const c = els[abbr];
+    const col = Math.floor(i / per), r = i % per;
     c.style.height = (RH - 2) + 'px';
-    c.style.top = (i * RH + 1) + 'px';
+    c.style.top = (r * RH + 1) + 'px';
+    c.style.left = col ? 'calc(50% + 6px)' : '0';
     c.querySelector('.pos').textContent = (i + 1);
     c.querySelector('.n').textContent = showTotals ? (totals[abbr]||0) : (counts[abbr]||0);
     c.classList.toggle('up', abbr === up);
@@ -233,9 +236,9 @@ if n == 0:
 st.caption(f"{year} {event_name} · {n} overtakes (OpenF1) · the list starts in starting order and drivers move up as they overtake")
 page = build_component(res, ot).strip()
 if hasattr(st, "iframe"):          # newer Streamlit
-    st.iframe(page, height=210 + 44 * len(res))
+    st.iframe(page, height=210 + 44 * ((len(res) + 1) // 2))
 else:                              # older Streamlit
-    components.html(page, height=210 + 44 * len(res), scrolling=False)
+    components.html(page, height=210 + 44 * ((len(res) + 1) // 2), scrolling=False)
 
 with st.expander("Full overtake list"):
     try:
