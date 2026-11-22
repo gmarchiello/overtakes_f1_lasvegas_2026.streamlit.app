@@ -117,8 +117,7 @@ TEMPLATE = """
   <div id="top">
     <button id="play">&#9654; Play all overtakes</button>
     <label class="pill">Duration <input id="dur" type="range" min="10" max="90" value="30"> <b id="durv">30</b>s</label>
-    <span class="pill">Total overtakes: <b id="total"></b></span>
-    <span class="pill">Replayed: <b id="done">0</b></span>
+    <span class="pill">Overtake <b id="done">0</b> of <b id="total"></b></span>
   </div>
   <div id="banner">Press play to watch every overtake of the race.</div>
   <div id="bar"><div id="fill"></div></div>
